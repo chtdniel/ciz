@@ -79,15 +79,22 @@
 
         // Daftar perintah dan outputnya
         const commands = {
-            'help': 'Daftar perintah yang tersedia:\n  about    - Siapa Christian Daniel?\n  skills   - Keahlian teknis\n  projects - Portofolio proyek\n  contact  - Informasi kontak\n  clear    - Membersihkan layar terminal',
+            'help': 'Daftar perintah yang tersedia:\n  about    - Siapa Christian Daniel?\n  skills   - Keahlian "teknis" yang sesungguhnya\n  projects - Portofolio proyek\n  contact  - Informasi kontak\n  clear    - Membersihkan layar terminal',
             
-            'about': 'Halo! Saya Christian Daniel.\nSaya adalah seorang Web Developer & Tech Enthusiast yang gemar memecahkan masalah melalui baris kode.\nSaya berfokus pada pembuatan antarmuka web yang interaktif, cepat, dan modern.',
+            'about': 'Halo! Saya Christian Daniel.\nSleep Enthusiast bersertifikat yang gemar memecahkan masalah langsung dari atas kasur.\nSaya berfokus pada jam tidur yang berkualitas dengan SLA (Service Level Agreement) rebahan 99.9%.\n\nMenurut saya, posisi horizontal adalah *framework* paling efisien untuk mencari jalan keluar dari error.\nTolong jangan bangunkan saya kecuali server sedang down, atau ada yang mau transfer uang.',
             
-            'skills': '=== Technical Skills ===\n[+] Languages : HTML, CSS, JavaScript, Python, PHP\n[+] Frameworks: React, Node.js, Tailwind CSS, Laravel\n[+] Tools     : Git, Docker, Linux, Figma',
+            'skills': `=== The Real Technical Skills ===
+[+] Googling Error Messages : Expert Level (99% Akurasi StackOverflow)
+[+] Copy-Pasting Code       : Master Degree (Ctrl+C & Ctrl+V Certified)
+[+] Backend Development     : Bisa, asal dokumentasinya ramah.
+[+] Frontend Development    : Jago bikin tombol (tapi kadang warnanya norak).
+[+] Debugging               : 10% coding, 90% nanya "Kenapa ini gak jalan?!" lalu pas jalan nanya "Kok tiba-tiba jalan?!"
+[+] Soft Skills             : Mampu tersenyum saat klien minta revisi ke-14.
+[+] Hardware Maintenance    : Meniup cartridge dan merestart router.`,
             
-            'projects': '=== Recent Projects ===\n1. E-Commerce API (Node.js & MongoDB)\n2. Terminal Portfolio (HTML, CSS, JS)\n3. AI Chatbot Interface (React.js)',
+            'projects': '=== Recent Projects ===\n1. "Udah Jadi Bang" App (Sistem e-commerce yang masih di localhost)\n2. Terminal Portfolio (Yang sedang kamu lihat sekarang)\n3. Niat Bikin Startup (Status: Masih Wacana sejak 2021)',
             
-            'contact': '=== Contact Information ===\nEmail    : contact@christiandaniel.com\nGitHub   : github.com/christiandaniel\nLinkedIn : linkedin.com/in/christiandaniel\nInstagram: @christian.daniel',
+            'contact': '=== Contact Information ===\nEmail    : contact@christiandaniel.com (Balasnya mungkin lama, tergantung siklus REM sleep saya)\nGitHub   : github.com/christiandaniel (Isinya repo hasil fork semua)\nLinkedIn : linkedin.com/in/christiandaniel (Mari saling endorse skill rebahan!)\nInstagram: @christian.daniel (Isinya lebih banyak meme daripada coding)',
         };
 
         // Fungsi dijalankan setiap kali tombol ditekan
@@ -107,7 +114,8 @@
                 } else if (cmd === '') {
                     response = '';
                 } else if (cmd === 'sudo') {
-                    response = `<span class="error">nice try, but you don't have root privileges!</span>`;
+                    // Easter egg ditambahkan untuk tema sleep enthusiast
+                    response = `<span class="error">nice try, but you don't have root privileges to wake me up!</span>`;
                 } else if (commands[cmd]) {
                     response = commands[cmd];
                 } else {
