@@ -52,6 +52,22 @@
             margin-left: 8px;
             caret-color: #9ece6a; /* Warna kursor berkedip */
         }
+
+        /* Tweak Mobile-Friendly */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+                font-size: 12px; /* Font lebih kecil agar rapi di HP */
+            }
+
+            .output {
+                font-size: 10px; /* Menjaga kotak ASCII tidak patah */
+            }
+
+            #cmd-input {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body>
