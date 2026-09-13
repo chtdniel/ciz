@@ -1,157 +1,370 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Christian Daniel | Terminal Portfolio</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Christian Daniel - Sleep Enthusiast & Developer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Space Grotesk"', 'sans-serif'],
+                        mono: ['"Fira Code"', 'monospace'],
+                    },
+                    colors: {
+                        surface: {
+                            DEFAULT: '#10141a',
+                            dim: '#0a0e14',
+                            low: '#141820',
+                            card: '#181c24',
+                            border: '#232936',
+                        },
+                        accent: {
+                            DEFAULT: '#a3e635', // Lime accent
+                            hover: '#84cc16',
+                            cyan: '#38bdf8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* Menggunakan tema warna gelap khas Tokyo Night / Hacker */
         body {
-            background-color: #1a1b26;
-            color: #a9b1d6;
-            font-family: 'Consolas', 'Fira Code', 'Courier New', Courier, monospace;
-            padding: 20px;
-            font-size: 16px;
-            line-height: 1.6;
-            margin: 0;
-            overflow-x: hidden;
+            background-color: #0a0e14;
+            color: #e2e8f0;
+            font-family: 'Space Grotesk', sans-serif;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
         }
-
-        /* Warna untuk prompt terminal */
-        .user { color: #9ece6a; font-weight: bold; } /* Hijau */
-        .dir { color: #7aa2f7; font-weight: bold; }  /* Biru */
-        
-        .output { 
-            color: #c0caf5; 
-            margin-bottom: 15px; 
-            white-space: pre-wrap; 
-        }
-        
-        .error { color: #f7768e; } /* Merah untuk error */
-        .success { color: #9ece6a; } 
-
-        #input-line {
-            display: flex;
-            align-items: center;
-            margin-top: 5px;
-        }
-
-        #cmd-input {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-family: inherit;
-            font-size: inherit;
-            flex-grow: 1;
-            outline: none;
-            margin-left: 8px;
-            caret-color: #9ece6a; /* Warna kursor berkedip */
-        }
-
-        /* Tweak Mobile-Friendly */
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-                font-size: 12px; /* Font lebih kecil agar rapi di HP */
-            }
-
-            .output {
-                font-size: 10px; /* Menjaga kotak ASCII tidak patah */
-            }
-
-            #cmd-input {
-                font-size: 12px;
-            }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #232936;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body>
-    <div class="container" id="terminal">
-        <div class="output">
-┌─────────────────────────────────────────────────────────┐
-│ Welcome to Christian Daniel's Interactive Terminal OS   │
-│ Type <span class="success">'help'</span> to see a list of available commands.        │
-└─────────────────────────────────────────────────────────┘
-        </div>
-        
-        <!-- Tempat untuk riwayat perintah yang sudah diketik -->
-        <div id="history"></div>
-        
-        <!-- Baris input aktif -->
-        <div id="input-line">
-            <span class="user">guest@christian-daniel</span>:<span class="dir">~</span>$ 
-            <input type="text" id="cmd-input" autofocus autocomplete="off" spellcheck="false">
-        </div>
-    </div>
 
+<body class="min-h-screen flex flex-col items-center antialiased pb-24 selection:bg-accent selection:text-black">
+    
+    <!-- TOP APP BAR -->
+    <header class="sticky top-0 z-50 w-full max-w-md bg-[#0a0e14]/90 backdrop-blur-md border-b border-surface-border px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-2 font-mono text-sm font-semibold text-accent">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span>christian.daniel</span>
+        </div>
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-low border border-surface-border text-xs font-mono text-accent-cyan">
+            <span class="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse"></span>
+            <span>sys.status [mode_rebahan]</span>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="w-full max-w-md px-4 pt-6 space-y-8">
+        
+        <!-- HERO SECTION -->
+        <section class="space-y-4">
+            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-surface-card border border-surface-border text-[11px] font-mono text-slate-300">
+                <span class="w-2 h-2 rounded-full bg-accent"></span> BISA DIAJAK KERJA (ASAL WFA DARI KASUR)
+            </div>
+            <div class="space-y-1">
+                <p class="font-mono text-xs text-accent">guest@christian-daniel:~$ whoami</p>
+                <h1 class="text-3xl font-bold tracking-tight text-white leading-tight"> Halo, Saya Christian Daniel. </h1>
+                <h2 class="text-lg font-semibold text-accent-cyan"> Full-Time Sleep Enthusiast &amp; Dev </h2>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed">
+                Mengarsiteki sistem copy - paste, CTRL+C / CTRL+V certified since 2010
+            </p>
+            <div class="flex flex-col gap-2.5 pt-2">
+                <a href="#terminal" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-accent text-black font-semibold text-sm hover:bg-accent-hover transition-colors shadow-lg shadow-accent/10">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path>
+                    </svg>
+                    [ Buka Terminal / Pencet Tombolnya ]
+                </a>
+            </div>
+            <!-- SOCIAL LINKS -->
+            <div class="flex items-center gap-4 text-xs font-mono text-slate-400 pt-1">
+                <a href="https://github.com/chtdniel" target="_blank" class="hover:text-accent transition-colors flex items-center gap-1.5">
+                    <span>&lt;&gt;</span> github/chtdniel
+                </a>
+                <span class="text-slate-600">/</span>
+                <a href="https://www.instagram.com/christiand.niel/" target="_blank" class="hover:text-accent transition-colors flex items-center gap-1.5">
+                    <span>@</span> ig/christiand.niel
+                </a>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE TERMINAL OS SECTION -->
+        <section id="terminal" class="rounded-xl bg-[#0e1218] border border-surface-border overflow-hidden shadow-2xl">
+            <!-- Window Controls -->
+            <div class="px-3 py-2.5 bg-surface-low border-b border-surface-border flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+                    <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+                </div>
+                <span class="font-mono text-[11px] text-slate-400">guest@portfolio: ~/kasur (v1.0)</span>
+                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </div>
+            
+            <!-- Terminal Body -->
+            <div class="p-3.5 font-mono text-xs space-y-3.5 text-slate-300">
+                <!-- ASCII Banner Box -->
+                <div class="p-2.5 rounded border border-surface-border bg-surface-dim/70 text-[11px] text-slate-400 leading-relaxed">
+                    Welcome to Christian Daniel's Sleep OS.<br />
+                    Ketik <span class="text-accent font-semibold">'help'</span> (atau pencet aja tombolnya) biar nggak usah capek mikir.
+                </div>
+                
+                <!-- Command History Output -->
+                <div id="terminal-history" class="space-y-3">
+                    <div>
+                        <span class="text-accent">guest@christian-daniel:~$</span>
+                        <span class="text-white ml-1">cat about.txt</span>
+                        <div class="mt-1.5 text-slate-400 leading-relaxed text-[11px]">
+                            Halo! Saya Christian Daniel. <br/> Sleep Enthusiast bersertifikat internasional. Fokus utama saya saat ini adalah mencapai jam tidur yang berkualitas. Karena kerjaan bisa dikerjain besok, tapi rasa ngantuk nggak bisa diajak kompromi.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Terminal Input / Execution Line -->
+                <div class="pt-1">
+                    <p class="text-[10px] text-slate-500 mb-1.5 font-mono">// Jangan diketik, dipencet aja biar hemat energi:</p>
+                    <div class="flex items-center gap-1.5 text-xs">
+                        <span class="text-accent font-semibold">guest@christian-daniel:~$</span>
+                        <span id="active-cmd" class="text-white font-mono"></span>
+                        <span class="inline-block w-2 h-4 bg-accent animate-pulse"></span>
+                    </div>
+                </div>
+                
+                <!-- Command Pills -->
+                <div class="grid grid-cols-5 gap-1.5 pt-1">
+                    <button onclick="runCommand('help')" class="py-1 px-2 rounded bg-surface-card border border-surface-border text-[11px] text-slate-300 hover:border-accent hover:text-accent active:scale-95 transition-all text-center">help</button>
+                    <button onclick="runCommand('skills')" class="py-1 px-2 rounded bg-surface-card border border-surface-border text-[11px] text-slate-300 hover:border-accent hover:text-accent active:scale-95 transition-all text-center">skills</button>
+                    <button onclick="runCommand('projects')" class="py-1 px-2 rounded bg-surface-card border border-surface-border text-[11px] text-slate-300 hover:border-accent hover:text-accent active:scale-95 transition-all text-center">projects</button>
+                    <button onclick="runCommand('contact')" class="py-1 px-2 rounded bg-surface-card border border-surface-border text-[11px] text-slate-300 hover:border-accent hover:text-accent active:scale-95 transition-all text-center">contact</button>
+                    <button onclick="runCommand('clear')" class="py-1 px-2 rounded bg-surface-card border border-surface-border text-[11px] text-slate-400 hover:border-red-400 hover:text-red-400 active:scale-95 transition-all text-center">clear</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- METRICS SECTION -->
+        <section class="space-y-3">
+            <p class="font-mono text-xs text-accent">// 01. VITAL SIGNS &amp; METRICS</p>
+            <h3 class="text-xl font-bold text-white tracking-tight">Status Kehidupan Sehari-hari</h3>
+            <div class="space-y-2.5">
+                <div class="p-3.5 rounded-xl bg-surface-card border border-surface-border">
+                    <span class="font-mono text-[10px] text-slate-500">[TARGET_TIDUR_HARIAN]</span>
+                    <div class="text-2xl font-bold text-accent font-mono mt-0.5">8+ Jam</div>
+                    <div class="text-xs text-slate-300 mt-1">Durasi minimum biar nggak cranky pas daily standup.</div>
+                    <div class="font-mono text-[10px] text-accent-cyan mt-1.5">&gt; prioritas utama kehidupan</div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-surface-card border border-surface-border">
+                    <span class="font-mono text-[10px] text-slate-500">[SLA_TARGET_REPLY]</span>
+                    <div class="text-2xl font-bold text-accent font-mono mt-0.5">99.9%</div>
+                    <div class="text-xs text-slate-300 mt-1">Peluang pesan dibaca, tapi dibalasnya kapan-kapan aja.</div>
+                    <div class="font-mono text-[10px] text-slate-400 mt-1.5">&gt; fault-tolerant social life</div>
+                </div>
+            </div>
+            
+            <!-- Tech Badges -->
+            <div class="pt-2">
+                <p class="font-mono text-[10px] text-slate-500 mb-2 tracking-wider">TOOLS SEHARI-HARI (YANG BENERAN DIPAKAI)</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2.5 py-1 rounded bg-surface-card border border-surface-border text-xs font-mono text-slate-300">Kasur King Size</span>
+                    <span class="px-2.5 py-1 rounded bg-surface-card border border-surface-border text-xs font-mono text-slate-300">AC 18 Derajat</span>
+                    <span class="px-2.5 py-1 rounded bg-surface-card border border-surface-border text-xs font-mono text-slate-300">Do Not Disturb Mode</span>
+                    <span class="px-2.5 py-1 rounded bg-surface-card border border-surface-border text-xs font-mono text-slate-300">Selimut Tebal</span>
+                    <span class="px-2.5 py-1 rounded bg-surface-card border border-surface-border text-xs font-mono text-slate-300">Kopi (kalo terpaksa melek)</span>
+                    <span class="px-2.5 py-1 rounded bg-surface-card border border-surface-border text-xs font-mono text-slate-300">ChatGPT (biar kerja cepet kelar)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED PROJECTS SECTION -->
+        <section id="projects" class="space-y-3">
+            <p class="font-mono text-xs text-accent">// 02. INOVASI KAUM REBAHAN</p>
+            <h3 class="text-xl font-bold text-white tracking-tight">Proyek &amp; Penemuan</h3>
+            <div class="space-y-3">
+                
+                <!-- Project 1 -->
+                <div class="p-4 rounded-xl bg-surface-card border border-surface-border space-y-2.5 hover:border-slate-600 transition-colors">
+                    <div class="flex items-center justify-between font-mono text-[10px]">
+                        <span class="text-accent bg-accent/10 px-1.5 py-0.5 rounded border border-accent/20">[SISTEM_CERDAS]</span>
+                        <span class="text-slate-500">v2.4</span>
+                    </div>
+                    <h4 class="text-base font-bold text-white">Auto-Reply "Lagi OTW" API</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Sistem terdistribusi untuk membalas chat "OTW bang" secara otomatis padahal baru banget buka mata dan masih di bawah selimut.
+                    </p>
+                    <div class="flex flex-wrap gap-1 text-[11px] font-mono text-accent-cyan">
+                        <span>#machine-learning</span>
+                        <span>#ngeles-akut</span>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="p-4 rounded-xl bg-surface-card border border-surface-border space-y-2.5 hover:border-slate-600 transition-colors">
+                    <div class="flex items-center justify-between font-mono text-[10px]">
+                        <span class="text-accent-cyan bg-accent-cyan/10 px-1.5 py-0.5 rounded border border-accent-cyan/20">[INFRA_HARDWARE]</span>
+                        <span class="text-slate-500">v1.1</span>
+                    </div>
+                    <h4 class="text-base font-bold text-white">Cloud(y) Bed Architecture</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Susunan tumpukan bantal dan guling ergonomis yang didesain sedemikian rupa untuk menopang leher agar tidak salah bantal.
+                    </p>
+                    <div class="flex flex-wrap gap-1 text-[11px] font-mono text-accent-cyan">
+                        <span>#ergonomics</span>
+                        <span>#high-availability-bed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT & HANDSHAKE SECTION -->
+        <section id="contact" class="p-5 rounded-2xl bg-surface-card border border-surface-border space-y-3.5">
+            <div class="font-mono text-xs text-accent">@ initiate_handshake()</div>
+            <h3 class="text-xl font-bold text-white tracking-tight">Mari Ngobrol (Kalo Saya Udah Bangun).</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">
+                Terbuka untuk penawaran proyek miliaran, donasi kopi, atau sekadar adu cepat tidur. Jangan email pagi-pagi, terima kasih.
+            </p>
+            <div class="space-y-2 pt-1">
+                <div class="w-full py-2.5 px-3 rounded-lg bg-surface-dim border border-surface-border font-mono text-xs text-center text-slate-300 select-all">
+                    still.sleeping@aol.com
+                </div>
+                <button id="copy-btn" onclick="copyEmail()" class="w-full py-2.5 px-4 rounded-lg bg-accent text-black font-semibold font-mono text-xs flex items-center justify-center gap-2 hover:bg-accent-hover transition-colors">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                    </svg>
+                    <span id="copy-text">copy_email_nya_sekarang</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="pt-6 text-center font-mono text-xs text-slate-500 space-y-2">
+            <div class="flex justify-center gap-3 text-slate-400">
+                <a href="#terminal" class="hover:text-accent">terminal</a>
+                <span>/</span>
+                <a href="#projects" class="hover:text-accent">projects</a>
+                <span>/</span>
+                <a href="#contact" class="hover:text-accent">contact</a>
+            </div>
+            <p>© 2025 Christian Daniel. Zzzzzzzz...</p>
+        </footer>
+    </main>
+
+    <!-- BOTTOM DOCK NAV -->
+    <nav class="fixed bottom-0 left-0 w-full bg-[#0a0e14]/90 backdrop-blur-lg border-t border-surface-border py-2 px-4 flex justify-around items-center z-50 max-w-md left-1/2 -translate-x-1/2">
+        <a href="#terminal" class="flex flex-col items-center gap-1 text-[11px] font-mono text-accent">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span>CLI</span>
+        </a>
+        <a href="#projects" class="flex flex-col items-center gap-1 text-[11px] font-mono text-slate-400 hover:text-white transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
+            <span>Works</span>
+        </a>
+        <a href="#contact" class="flex flex-col items-center gap-1 text-[11px] font-mono text-slate-400 hover:text-white transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path>
+            </svg>
+            <span>Connect</span>
+        </a>
+    </nav>
+
+    <!-- INTERACTIVE TERMINAL JAVASCRIPT -->
     <script>
-        const input = document.getElementById('cmd-input');
-        const history = document.getElementById('history');
-
-        // Daftar perintah dan outputnya
+        const historyEl = document.getElementById('terminal-history');
+        const activeCmdEl = document.getElementById('active-cmd');
         const commands = {
-            'help': 'Daftar perintah yang tersedia:\n  about    - Siapa Christian Daniel?\n  skills   - Keahlian "teknis" yang sesungguhnya\n  projects - Portofolio proyek\n  contact  - Informasi kontak\n  clear    - Membersihkan layar terminal',
-            
-            'about': 'Halo! Saya Christian Daniel.\nSleep Enthusiast bersertifikat yang gemar memecahkan masalah langsung dari atas kasur.\nSaya berfokus pada jam tidur yang berkualitas dengan SLA (Service Level Agreement) rebahan 99.9%.\n\nMenurut saya, posisi horizontal adalah *framework* paling efisien untuk mencari jalan keluar dari error.\nTolong jangan bangunkan saya kecuali server sedang down, atau ada yang mau transfer uang.',
-            
-            'skills': `=== The Real Technical Skills ===
-[+] Googling Error Messages : Expert Level (99% Akurasi StackOverflow)
-[+] Copy-Pasting Code       : Master Degree (Ctrl+C & Ctrl+V Certified)
-[+] Backend Development     : Bisa, asal dokumentasinya ramah.
-[+] Frontend Development    : Jago bikin tombol (tapi kadang warnanya norak).
-[+] Debugging               : 10% coding, 90% nanya "Kenapa ini gak jalan?!" lalu pas jalan nanya "Kok tiba-tiba jalan?!"
-[+] Soft Skills             : Mampu tersenyum saat klien minta revisi ke-14.
-[+] Hardware Maintenance    : Meniup cartridge dan merestart router.`,
-            
-            'projects': '=== Recent Projects ===\n1. "Udah Jadi Bang" App (Sistem e-commerce yang masih di localhost)\n2. Terminal Portfolio (Yang sedang kamu lihat sekarang)\n3. Niat Bikin Startup (Status: Masih Wacana sejak 2021)',
-            
-            'contact': '=== Contact Information ===\nEmail    : contact@christiandaniel.com (Balasnya mungkin lama, tergantung siklus REM sleep saya)\nGitHub   : github.com/christiandaniel (Isinya repo hasil fork semua)\nLinkedIn : linkedin.com/in/christiandaniel (Mari saling endorse skill rebahan!)\nInstagram: @christian.daniel (Isinya lebih banyak meme daripada coding)',
+            help: () => `
+                <div class="text-[11px] text-slate-300 space-y-1">
+                    <p class="text-accent font-semibold">Available commands:</p>
+                    <p><span class="text-white font-bold">about</span> - Kebenaran tentang hidup saya</p>
+                    <p><span class="text-white font-bold">skills</span> - Skill bertahan hidup di kasur</p>
+                    <p><span class="text-white font-bold">projects</span> - Proyek-proyek nggak jelas</p>
+                    <p><span class="text-white font-bold">contact</span> - Cara mengganggu jam tidur saya</p>
+                    <p><span class="text-white font-bold">clear</span> - Menghapus dosa masa lalu (di terminal aja)</p>
+                </div>
+            `,
+            skills: () => `
+                <div class="text-[11px] text-slate-300 space-y-1 border-l-2 border-accent pl-2">
+                    <p class="text-accent font-semibold">[SKILL_UTAMA]</p>
+                    <p><span class="text-slate-400">Survival:</span> Menghindar dari meeting dadakan, pura-pura disconnect saat Zoom (padahal lagi rebahan).</p>
+                    <p><span class="text-slate-400">Technical:</span> Copilot, StackOverflow, ChatGPT (Mereka yang kerja keras, saya yang tidur).</p>
+                </div>
+            `,
+            projects: () => `
+                <div class="text-[11px] text-slate-300 space-y-1">
+                    <p class="text-accent font-semibold">[PROYEK_YANG_TERBENGKALAI_KARENA_KETIDURAN]</p>
+                    <p>1. <span class="text-white">Rebahan OS</span> (Sistem operasi khusus untuk smart-bed)</p>
+                    <p>2. <span class="text-white">Do Not Disturb API</span> (Menolak semua webhook di atas jam 8 malam)</p>
+                    <p>3. <span class="text-white">Turu-net</span> (Neural network untuk mendeteksi tingkat keempukan kasur secara real-time)</p>
+                </div>
+            `,
+            contact: () => `
+                <div class="text-[11px] text-slate-300 space-y-1">
+                    <p class="text-accent font-semibold">[WARNING: SLOW RESPONSE]</p>
+                    <p>Email: <span class="text-accent-cyan">still.sleeping@aol.com</span> (Harap jangan email pagi-pagi)</p>
+                    <p>GitHub: <a href="https://github.com/chtdniel" target="_blank" class="underline hover:text-accent">github.com/chtdniel</a> (Grafik ijo-ijo itu kerjaan bot, sayanya tidur)</p>
+                    <p>Instagram: <a href="https://www.instagram.com/christiand.niel/" target="_blank" class="underline hover:text-accent">ig/christiand.niel</a> (Isinya mungkin cuma foto langit atau foto melek setengah)</p>
+                </div>
+            `
         };
 
-        // Fungsi dijalankan setiap kali tombol ditekan
-        input.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = input.value.trim().toLowerCase();
-                input.value = ''; // Kosongkan input
-
-                // Format tampilan prompt yang diketik user
-                const prompt = `<span class="user">guest@christian-daniel</span>:<span class="dir">~</span>$ ${cmd}`;
-                let response = '';
-
-                // Logika perintah
-                if (cmd === 'clear') {
-                    history.innerHTML = ''; // Hapus semua riwayat
-                    return;
-                } else if (cmd === '') {
-                    response = '';
-                } else if (cmd === 'sudo') {
-                    // Easter egg ditambahkan untuk tema sleep enthusiast
-                    response = `<span class="error">nice try, but you don't have root privileges to wake me up!</span>`;
-                } else if (commands[cmd]) {
-                    response = commands[cmd];
-                } else {
-                    response = `<span class="error">bash: ${cmd}: command not found. Type 'help' for available commands.</span>`;
-                }
-
-                // Tambahkan perintah dan output ke riwayat
-                const historyElement = document.createElement('div');
-                historyElement.innerHTML = `<div>${prompt}</div><div class="output">${response}</div>`;
-                history.appendChild(historyElement);
-                
-                // Auto scroll ke bawah
-                window.scrollTo(0, document.body.scrollHeight);
+        function runCommand(cmd) {
+            if (cmd === 'clear') {
+                historyEl.innerHTML = '';
+                activeCmdEl.innerText = '';
+                return;
             }
-        });
+            activeCmdEl.innerText = cmd;
+            setTimeout(() => {
+                const item = document.createElement('div');
+                item.className = "space-y-1.5 pt-1 border-t border-surface-border/50";
+                const output = commands[cmd] ? commands[cmd]() : `<p class="text-red-400 text-[11px]">Males ah mikir perintah aneh-aneh: ${cmd}. Ketik 'help' aja.</p>`;
+                item.innerHTML = `
+                    <div>
+                        <span class="text-accent">guest@christian-daniel:~$</span>
+                        <span class="text-white ml-1 font-semibold">${cmd}</span>
+                    </div>
+                    <div>${output}</div>
+                `;
+                historyEl.appendChild(item);
+                activeCmdEl.innerText = '';
+            }, 300); // dilamain dikit biar kayak orang beneran lagi ngetik sambil ngantuk
+        }
 
-        // Memastikan input selalu fokus meskipun user klik sembarangan di layar
-        document.addEventListener('click', () => {
-            input.focus();
-        });
+        function copyEmail() {
+            const email = "still.sleeping@aol.com";
+            navigator.clipboard.writeText(email).then(() => {
+                const textEl = document.getElementById('copy-text');
+                textEl.innerText = "yey_tercopy!";
+                setTimeout(() => {
+                    textEl.innerText = "copy_email_nya_sekarang";
+                }, 2500);
+            });
+        }
     </script>
 </body>
 </html>
